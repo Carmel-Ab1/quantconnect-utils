@@ -93,4 +93,5 @@ def update_map_files(algo: QCAlgorithm, subset: List[str]= None):
                     df = pd.concat([df, cur_row])
 
                 map_file_dest_path = os.path.join(map_files_dir_path, f'{ticker}.csv')
+                df = df.sort_values(by=['Date', 'DataMappingMode'])
                 df.to_csv(map_file_dest_path, index=False, columns=['Date', 'SecurityId', 'Market', 'DataMappingMode'])
