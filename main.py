@@ -4,7 +4,6 @@ from update_map_files import update_map_files
 # endregion
 
 class Quantconnectutils(QCAlgorithm):
-
     def initialize(self):
         # Locally Lean installs free sample data, to download more data please visit https://www.quantconnect.com/docs/v2/lean-cli/datasets/downloading-data
         self.set_start_date(2020, 1, 1)  # Set Start Date
