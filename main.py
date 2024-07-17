@@ -9,7 +9,7 @@ class Quantconnectutils(QCAlgorithm):
         self.set_start_date(2020, 1, 1)  # Set Start Date
         self.set_end_date(2020, 1, 1)  # Set End Date
         self.log('STARTED RUNNING')
-        update_map_files(self, )
+        update_map_files(self,)
 
     def on_data(self, data: Slice):
         pass

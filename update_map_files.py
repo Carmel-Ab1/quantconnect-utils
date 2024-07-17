@@ -67,7 +67,7 @@ def update_map_files(algo: QCAlgorithm, subset: List[str]= None):
                 continue
             print(f'WORKING ON {ticker}')
             ticker_dir_path = os.path.join(minute_path, ticker)
-            df = pd.DataFrame(columns=['Date', 'SecurityId', 'Market', 'DataMappingMode'])
+            df_rows = {'Date': [], 'SecurityId': [], 'Market': [], 'DataMappingMode': []}
 
             for zip_filename in os.listdir(ticker_dir_path):
                 date = zip_filename[:zip_filename.find('_')]
@@ -84,13 +84,14 @@ def update_map_files(algo: QCAlgorithm, subset: List[str]= None):
 
 
                 for dataMappingMode in range(4):
-                    cur_row = pd.DataFrame({'Date': literal_date,
+                    cur_row = {'Date': literal_date,
                                             'SecurityId': contract_id.lower(),
                                             'Market': market.upper(),
-                                            'DataMappingMode': dataMappingMode},
-                                           index=[df.shape[0]])
+                                            'DataMappingMode': dataMappingMode}
+                    for k, v in cur_row.items():
+                        df_rows[k] += [v]
 
-                    df = pd.concat([df, cur_row])
+            df = pd.DataFrame(data=df_rows, index=range(len(df_rows['Date'])), columns=['Date', 'SecurityId', 'Market', 'DataMappingMode'])
 
             map_file_dest_path = os.path.join(map_files_dir_path, f'{ticker}.csv')
             df = df.sort_values(by=['Date', 'DataMappingMode'])
